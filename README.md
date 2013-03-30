@@ -1,11 +1,17 @@
 
-
-Composite C1 Azure Manager and Logviewer.   (1 Day Project)
+Composite C1 Azure Manager and Log Viewer.   (1 Day Project)
 ==============
 
-This is the work of one days coding. Goal was to create a Logviewer for Composite C1 Azure part that only downloaded the changes written to the logs in the storage account.  
+This is the work of one days coding. Goal was to create a Log Viewer for Composite C1 Azure part that only downloaded the changes written to the logs in the storage account.  
 
 The application have been build using MVVM patterns and should be easy to do further work on.
+
+##Version History
+0.1
+---
+Initial Commit: It shows the log when open connection is pressed for a valid storage account. There are no write backs to the storage account and it should be safe to use on deployment sites.
+The goal for next version is to handle various errors that might happen in this version; one example is clicking open connection when the log tap is not active.
+The purpose of this first version was only a proof of concept.
 
 Copyrights
 ==========
