@@ -8,8 +8,7 @@ The application have been build using MVVM patterns and should be easy to do fur
 ##Version History
 RC 0.1
 ---
-Varius senaries for making the application thrown an exception have been handled and things have been made Async, not frezzing the UI.
-Feel free to try build and run it. If it crash, feel free to create an issue telling alittle about what you did :)
+Fixed scenarios that crashed the application and it have become Async, not freezing the UI. Feel free to try build and run it. If it crash, feel free to create an issue telling a little about what you did :)
 
 Beta 0.1
 ---
