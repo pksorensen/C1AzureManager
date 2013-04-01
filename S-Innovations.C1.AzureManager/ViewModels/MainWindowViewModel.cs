@@ -82,7 +82,11 @@ namespace S_Innovations.C1.AzureManager.ViewModels
             CloseTabCommand = new EventCommand<TabItemViewModel>(close_tabs);
             DeploymentSelectionChangedCommand = new EventCommand<object>(k => { OpenLogsCommand.RaiseCanExecuteChanged(); });
            //  public RelayCommand CloseTabCommand { get; set; }
-           
+            
+            //TODO Fix the watermarks.
+            StorageAccount = "Azure Storage Account";
+            StorageKey = "Key";
+            ConfigurationFolder = "Not Used";
 
             LogViewer = new TextEditorWrapper();
            
