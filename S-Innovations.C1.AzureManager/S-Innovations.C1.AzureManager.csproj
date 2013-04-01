@@ -83,6 +83,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MVVM\EventCommands\EventBinding.cs" />
+    <Compile Include="ViewModels\DeploymentLogViewerViewModel.cs" />
+    <Compile Include="Views\DeploymentLogViewer.xaml.cs">
+      <DependentUpon>DeploymentLogViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExtensionMethods\AzureExtensions.cs" />
     <Compile Include="Models\ConfigurationFile.cs" />
     <Compile Include="Models\LogFolder.cs" />
     <Compile Include="Models\TextEditorUpdater.cs" />
@@ -95,7 +101,16 @@
     <Compile Include="MVVM\ElementWrappers\IElementWrappers.cs" />
     <Compile Include="MVVM\EventCommands\RelayCommand.cs" />
     <Compile Include="MVVM\ViewModel.cs" />
+    <Compile Include="TemplateSelectors\TabControlTemplateSelector.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Page Include="Resources\TabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeploymentLogViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -131,6 +146,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Assets\CompositeC1Azure-SDK-1.8-XS\CompositeC1Azure.cspkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\CompositeC1Azure-SDK-1.8-XS\ServiceConfiguration.cscfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -143,7 +164,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
+    <Folder Include="Controls\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />

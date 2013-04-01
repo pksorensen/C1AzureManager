@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace S_Innovations.C1.AzureManager.MVVM.ElementWrappers
 {
@@ -12,6 +13,7 @@ namespace S_Innovations.C1.AzureManager.MVVM.ElementWrappers
             {
                 get { return _elements ?? (_elements = new HashSet<TElement>()); }
             }
+            public TElement Element { get { return Elements.FirstOrDefault(); } }
 
             protected virtual void OnElementAdded(TElement element)
             {

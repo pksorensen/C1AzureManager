@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace S_Innovations.C1.AzureManager.Models
@@ -59,6 +60,7 @@ namespace S_Innovations.C1.AzureManager.Models
                 long oldpos = Stream.Position;
 
                 _server_ref.DownloadRangeToStream(Stream, Length, _server_ref.Properties.Length - Length);
+                Debug.Print("DOWNLOAD FROM AZURE");
 
                 Stream.Seek(oldpos, SeekOrigin.Begin);
                 var returnval = new List<String>();

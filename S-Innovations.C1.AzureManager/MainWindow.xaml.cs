@@ -24,13 +24,14 @@ namespace S_Innovations.C1.AzureManager
         public MainWindow()
         {
             InitializeComponent();
-            Closed += MainWindow_Closed;
-        }
-
-        void MainWindow_Closed(object sender, EventArgs e)
-        {
             
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         
     }
 }

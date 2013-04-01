@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,21 @@ namespace S_Innovations.C1.AzureManager.MVVM.ElementWrappers
         }
         public Dispatcher Dispatcher
         {
-            get { return Elements.First().Dispatcher; }
+            get { var f = Elements.FirstOrDefault();
+                if (f==null)
+                return null;
+                return f.Dispatcher; }
+        }
+    }
+    public class ListViewWrapper<T> : ControlWrapper<ListView> where T : class
+    {
+        public IList SelectedItems
+        {
+            get { return this.Elements.First().SelectedItems; }
+        }
+        public T SelectedItem
+        {
+            get { return this.Elements.First().SelectedItem as T; }
         }
     }
 }

@@ -5,7 +5,11 @@
         xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
         xmlns:MetroControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:ElementWrappers="clr-namespace:S_Innovations.C1.AzureManager.MVVM.ElementWrappers"
-                           xmlns:ave="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
+        xmlns:EventCommands="clr-namespace:S_Innovations.C1.AzureManager.MVVM.EventCommands"
+        xmlns:TemplateSelectors="clr-namespace:S_Innovations.C1.AzureManager.TemplateSelectors"
+        xmlns:Views="clr-namespace:S_Innovations.C1.AzureManager.Views"
+        xmlns:ave="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
+        xmlns:Actions="clr-namespace:MahApps.Metro.Actions;assembly=MahApps.Metro"
           WindowStyle="None" ShowIconOnTitleBar="True"
         DataContext="{StaticResource  MainWindowModel}" Width="800" Height="600" Title="Composite C1 Azure Manager"  >
     
@@ -18,9 +22,33 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colours.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml"/>
+                <ResourceDictionary Source="/Resources/TabControl.xaml"/>
                 
-            </ResourceDictionary.MergedDictionaries>            
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="TabControl" BasedOn="{StaticResource StandardTabControl}"/>
+            <SolidColorBrush x:Key="BackgroundSelected" Color="#007ACC"/>
+            <DataTemplate x:Key="DeploymentDataTemplate">
+                <Grid HorizontalAlignment="Stretch">
+                    <TextBlock Background="{StaticResource TextBoxBackground}"
+                               HorizontalAlignment="Stretch" Margin="0,3,0,3" FontSize="18"
+                               Foreground="{StaticResource Foreground}"  Text="{Binding Name}" IsEnabled="False"/>
+        
+                </Grid>
+            </DataTemplate>
+            <DataTemplate x:Key="C1DeploymentLogViewerTemplate"
+              DataType="{x:Type TemplateSelectors:TabItemViewModel}">
+                <Views:DeploymentLogViewer/>
+            </DataTemplate>
+            <DataTemplate x:Key="C1DeploymentWebsitesTemplate"
+              DataType="{x:Type TemplateSelectors:TabItemViewModel}">
+                <Views:DeploymentLogViewer/>
+            </DataTemplate>
+            <TemplateSelectors:TabControlTemplateSelector x:Key="TabControlTemplateSelector"
+                C1DeploymentLogViewer="{StaticResource C1DeploymentLogViewerTemplate}"
+                C1DeploymentWebsites ="{StaticResource C1DeploymentWebsitesTemplate}" />
+           
         </ResourceDictionary>
+        
     </Window.Resources>
     
     <MetroControls:MetroWindow.WindowCommands>
@@ -43,8 +71,8 @@
     </MetroControls:MetroWindow.WindowCommands>
     <DockPanel>
         <Menu DockPanel.Dock="Top" SnapsToDevicePixels="True" Margin="2,0,0,0">
-            <MenuItem Header="ROCKETS">
-                <MenuItem Header="Rocket slot 1">
+            <MenuItem Header="Files" ToolTip="Not Implemented">
+                <!--<MenuItem Header="Rocket slot 1">
                     <MenuItem Header="Fire slot"/>
                     <Separator/>
                     <MenuItem Header="Relaod slot"/>
@@ -52,25 +80,19 @@
                 </MenuItem>
                 <MenuItem Header="Rocket slot 2">
                     <MenuItem Header="damaged .. being repaired" IsEnabled="False"/>
-                </MenuItem>
+                </MenuItem>-->
             </MenuItem>
-            <MenuItem Header="NAVIGATION">
-                <MenuItem Header="Left engine">
-                    <MenuItem Header="Full speed ahead"/>
-                    <MenuItem Header="2/3 speed"/>
-                    <MenuItem Header="1/3 speed"/>
-                    <MenuItem Header="Stop engine"/>
-                </MenuItem>
-                <MenuItem Header="Right engine">
-                    <MenuItem Header="Full speed ahead"/>
-                    <MenuItem Header="2/3 speed"/>
-                    <MenuItem Header="1/3 speed"/>
-                    <MenuItem Header="Stop engine"/>
-                </MenuItem>
+            <MenuItem Header="About">
+                <MenuItem Header="S-Innovations" ToolTip="Not Implemented"/>
+                <MenuItem Header="Check for updates" ToolTip="Not Implemented"/>
+               
             </MenuItem>
         </Menu>
         <Canvas DockPanel.Dock="Bottom" Height="15">
-            <TextBlock Foreground="{StaticResource Foreground}" FontSize="10" FontWeight="Bold"><Run  Text="Status:"/></TextBlock>
+            <TextBlock Foreground="{StaticResource Foreground}" FontSize="10" FontWeight="Bold">
+                <Run  Text="Status:"/><Run Text="{Binding Status}" />
+                
+            </TextBlock>
         </Canvas>
         <TextBlock DockPanel.Dock="Left" Foreground="{StaticResource Foreground}" Margin="5" VerticalAlignment="Center">
             <TextBlock.LayoutTransform>
@@ -86,7 +108,24 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="300"/>
              </Grid.ColumnDefinitions>
-            <TabControl Margin="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <TabControl ItemsSource="{Binding TabItemsViewModelCollection}" 
+            ContentTemplateSelector="{StaticResource TabControlTemplateSelector}"
+                        SelectedItem="{Binding OpenedTab, Mode=TwoWay}" >
+                <TabControl.ItemTemplate>
+                    <!-- this is the header template-->
+                    <DataTemplate>
+  
+                            <TextBlock Text="{Binding Header}"></TextBlock>
+                           
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+            </TabControl>
+            
+            <!--<TabControl Margin="0,10,0,0" ElementWrappers:ElementBinder.Wrapper="{Binding TabControlWrapper}">
 
                 <TabItem Header="Azure Log">
                     <ave:TextEditor  Grid.Row="1" Grid.Column="1" ElementWrappers:ElementBinder.Wrapper="{Binding LogViewer}"
@@ -96,12 +135,7 @@
                 <TabItem Header="Websites">
 
                     
-                    <!--<ListBox>
-                      
-                    <ItemsControl  ItemsSource="{Binding WebSitesConfiguration.Root.Elements}" ItemTemplate="{DynamicResource WebSiteDataTemplate}">
-                        
-                    </ItemsControl>
-                    </ListBox>-->
+
                     <ListView Grid.Row="1" Grid.Column="0" Background="{StaticResource Background}"
                   ItemsSource="{Binding WebSitesConfiguration.Root.Elements}"
                   ItemTemplate="{DynamicResource WebSiteDataTemplate}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -118,7 +152,8 @@
 
                     </ListView>
                 </TabItem>
-            </TabControl>
+            </TabControl>-->
+            
             <StackPanel Grid.Column="1" Margin="50,25,25,0">
                 <TextBlock Margin="0,10,0,10" FontSize="18" Foreground="{StaticResource Foreground}" Text="Storage Connection"/>
                 <Separator Background="#11FFFFFF"/>
@@ -132,8 +167,19 @@
                 <TextBox  MetroControls:TextboxHelper.Watermark="Deployment Folder" Margin="0,3,0,10" FontSize="18" Foreground="{StaticResource Foreground}"
                           Text="{Binding ConfigurationFolder}"  />
                 <Button HorizontalAlignment="Right" Style="{StaticResource LinkButton}" Command="{Binding TestConnectionCommand}" Content="Open Connection..." Margin="0,10,0,3" />
-   
-        </StackPanel>
+
+                <TextBlock Margin="0,10,0,10" FontSize="18" Foreground="{StaticResource Foreground}" Text="Deployments"/>
+                <Separator Background="#11FFFFFF"/>
+
+                <ListView x:Name="DeploymentListview" Height="200" EventCommands:EventBinding.SelectionChanged="{Binding DeploymentSelectionChangedCommand}"
+                          ItemTemplate="{DynamicResource DeploymentDataTemplate}"
+                          ItemsSource="{Binding Deployments}"
+                          Background="{StaticResource LightBackground}"
+                          />
+                
+                <Button HorizontalAlignment="Right" Style="{StaticResource LinkButton}" CommandParameter="{Binding SelectedItems, ElementName=DeploymentListview}" Command="{Binding OpenLogsCommand}"  Content="Open Log..." Margin="0,10,0,3" />
+                <Button HorizontalAlignment="Right"  Style="{StaticResource LinkButton}" CommandParameter="{Binding SelectedItems, ElementName=DeploymentListview}" Command="{Binding ManagerWebsitesCommand}"  Content="Manage Websites..." Margin="0,0,0,3" />
+            </StackPanel>
 
 
 

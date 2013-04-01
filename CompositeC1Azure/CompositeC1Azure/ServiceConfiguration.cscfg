@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="CompositeC1Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="2" osVersion="*" schemaVersion="2012-10.1.8">
+  <Role name="WebRole">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <!-- Only letters and numbers -->
+      <Setting name="DeploymentName" value="compositeac1" />
+      <!-- Only letters and numbers -->
+      <!-- If this is empty, no default website will be created -->
+      <Setting name="DefaultWebsiteName" value="defaultwebsite" />
+      <!-- Use this to name multiple deployments in different datacenters with same DeploymentName -->
+      <Setting name="DisplayName" value="North Europe" />
+      <Setting name="BlobConnectionString" value="DefaultEndpointsProtocol=http;AccountName=[ACCOUNT_NAME];AccountKey=[ACCOUNT_KEY]" />
+      <!-- If this is empty and the website does not exist in the blob store, a empty site will be created -->
+      <Setting name="ZippedWebsiteUrl" value="http://package.composite.net/AzureInstallFiles/DownloadWebsite.aspx" />
+      <Setting name="CompositeC1AzureRuntimeFilesUrl" value="http://package.composite.net/AzureInstallFiles/Azure18" />
+      <!-- How often the webrole checks to see if there are any changes to the websites configuration file (in seconds) -->
+      <Setting name="CheckConfigUpdateTime" value="15000" />
+      <Setting name="ApplicationPoolIdleTimeout" value="00:00:00" />
+      <!-- Setting this to true will make the webrole delete the blob for the website if the website is removed from the configuration -->
+      <Setting name="DeleteWebsiteBlobWhenRemovingWebsite" value="false" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.Enabled" value="true" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountUsername" value="s093294" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountEncryptedPassword" value="MIIBnQYJKoZIhvcNAQcDoIIBjjCCAYoCAQAxggFOMIIBSgIBADAyMB4xHDAaBgNVBAMME1dpbmRvd3MgQXp1cmUgVG9vbHMCEG/tXSbv9hqfQMTLHJ5C1x0wDQYJKoZIhvcNAQEBBQAEggEAFipK9mGc1ZK5yaTD8iODN29ln79gL9DdAWYKNikN4hwi5oU6VpT8KDB5hxFabX3xP39jKXENGJjRJ3+18B2aWeIu7pTyw72mOe1Vp7u/3Ry+dDovW2q/gtevoLZzTrycvfu+tntQy3uJOlvrAuk59ExPjFTLRwE58WjKG90eLxJZ0LjXcS7tzg3zbfoE0QtV73r18w3AFaX28rwmgEmIwnrPiRBiAUxBLANSlw1dDnAT6pE9jtXAVb45902vZ0sctEBDXxEu0zeqEkr7lEFddrXoxwNh1lUb7+0i5kizio3HWY/AadLyV8kdlPvF5/9Co2qnhEbJ5+s+Wy45nUJDTjAzBgkqhkiG9w0BBwEwFAYIKoZIhvcNAwcECORCTPhwiyoOgBAVe8ZLJIYXwL6PrP/vx7uk" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteAccess.AccountExpiration" value="2014-03-30T23:59:59.0000000+02:00" />
+      <Setting name="Microsoft.WindowsAzure.Plugins.RemoteForwarder.Enabled" value="true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="Microsoft.WindowsAzure.Plugins.RemoteAccess.PasswordEncryption" thumbprint="1E141403BAE4AE37C60B9AE636A51CD4F04ED275" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+</ServiceConfiguration>
