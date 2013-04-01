@@ -5,11 +5,20 @@ This is the work of one days coding. Goal was to create a Log Viewer for Composi
 
 The application have been build using MVVM patterns and should be easy to do further work on.
 
-##Version History
-RC 0.1
----
-Fixed scenarios that crashed the application and it have become Async, not freezing the UI. Feel free to try build and run it. If it crash, feel free to create an issue telling a little about what you did :)
 
+
+##Version History
+Version 1 (GOAL)
+----------------
+Deployment of Composite C1  Web Role.
+Add/Remove and Maintain Composite C1 Sites within a deployment.
+View Logs and Performance Counters.
+
+RC 0.1 (CURRENT)
+---
+Fixed scenarios that crashed the application and it have become Async, not freezing the UI. Feel free to try build and run it. If it crash, feel free to create an issue telling a little about what you did :)  
+Added such it finds deployments in the storage account automatic and you can select from the deployments which logs you want to show.
+ 
 Beta 0.1
 ---
 Initial Commit: It shows the log when open connection is pressed for a valid storage account. There are no write backs to the storage account and it should be safe to use on deployment sites.
