@@ -37,7 +37,7 @@ Neither Poul K. Sørensen nor any contributor to the software will be liable for
 
 
 
-![How does the application look.](https://raw.github.com/s093294/C1AzureManager/master/c1logviewer_gui.png "The Gui")
+![How does the application look.](https://raw.github.com/s093294/C1AzureManager/master/c1logviewer_gui1.png "The Gui")
 ![Compare Composites Logviewer with mine.](https://raw.github.com/s093294/C1AzureManager/master/c1logviewer.png "Network Usages")
 
 
