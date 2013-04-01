@@ -10,9 +10,9 @@ The application have been build using MVVM patterns and should be easy to do fur
 ##Version History
 Version 1 (GOAL)
 ----------------
-Deployment of Composite C1  Web Role.
-Add/Remove and Maintain Composite C1 Sites within a deployment.
-View Logs and Performance Counters.
+Deployment of Composite C1  Web Role.  
+Add/Remove and Maintain Composite C1 Sites within a deployment.   
+View Logs and Performance Counters.   
 
 RC 0.1 (CURRENT)
 ---
