@@ -93,12 +93,19 @@ namespace S_Innovations.C1.AzureManager.ViewModels
 
             if (File.Exists("cache.xml"))
             {
-                XElement x = XElement.Load("cache.xml");
-                x = x.Element("Connection");
-                StorageAccount = x.Attribute("StorageAccount").Value;
-                StorageKey = x.Attribute("StorageKey").Value;
-                ConfigurationFolder = x.Attribute("ConfigurationFolder").Value;
-                Status = "Loaded connection info from cache.xml";
+                try
+                {
+                    XElement x = XElement.Load("cache.xml");
+                    x = x.Element("Connection");
+                    StorageAccount = x.Attribute("StorageAccount").Value;
+                    StorageKey = x.Attribute("StorageKey").Value;
+                    ConfigurationFolder = x.Attribute("ConfigurationFolder").Value;
+                    Status = "Loaded connection info from cache.xml";
+                }
+                catch
+                {
+                    Status = "Error Loading connection cache file.";
+                }
             }
         }
 
@@ -238,15 +245,24 @@ namespace S_Innovations.C1.AzureManager.ViewModels
 
         private void StoreConnectionInfo()
         {
-            XDocument e = new XDocument(new XDeclaration("1.0", "UTF8", "yes"));
-            XElement Root = new XElement("Root");
-            XElement connection = new XElement("Connection");
-            Root.Add(connection);
-            e.Add(Root);
-            connection.Add(new XAttribute("StorageAccount", StorageAccount));
-            connection.Add(new XAttribute("StorageKey", StorageKey));
-            connection.Add(new XAttribute("ConfigurationFolder", ConfigurationFolder));
-            e.Save("cache.xml");
+            try
+            {
+
+                XDocument e = new XDocument(new XDeclaration("1.0", "UTF8", "yes"));
+                XElement Root = new XElement("Root");
+                XElement connection = new XElement("Connection");
+                Root.Add(connection);
+                e.Add(Root);
+                connection.Add(new XAttribute("StorageAccount", StorageAccount));
+                connection.Add(new XAttribute("StorageKey", StorageKey));
+                connection.Add(new XAttribute("ConfigurationFolder", ConfigurationFolder));
+                e.Save("cache.xml");
+            }
+            catch
+            {
+                Status = "Could not save cache connection file";
+            }
+
         }
     }
 }
