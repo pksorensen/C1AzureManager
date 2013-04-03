@@ -56,7 +56,8 @@ namespace S_Innovations.C1.AzureManager.ExtensionMethods
         {
             _logfolder = new AsyncLazy<LogFolder>((Func<Task<LogFolder>>)load_logfolder);
         }
-        public Task<LogFolder> LogFolderAsync {get{return _logfolder.Value;}}
+        public AsyncLazy<LogFolder> LogFolderLazyAsync {get{return _logfolder;}}
+        
         /// <summary>
         /// Get the Website Configuration. Null for Websites.
         /// </summary>

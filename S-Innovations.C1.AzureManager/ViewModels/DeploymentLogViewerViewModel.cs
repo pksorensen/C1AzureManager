@@ -230,7 +230,7 @@ namespace S_Innovations.C1.AzureManager.ViewModels
                 RaisePropertyChanged("Document");
             });
 
-            var logfolder = await Container.LogFolderAsync;
+            var logfolder = await Container.LogFolderLazyAsync.Value;
             logfolder.LogUpdated += LogFolder_LogUpdated;
             Document.Text = logfolder.Text;
             
@@ -250,7 +250,7 @@ namespace S_Innovations.C1.AzureManager.ViewModels
         }
         public void Stop()
         {
-            Container.LogFolderAsync.Result.LogUpdated -= LogFolder_LogUpdated;
+            Container.LogFolderLazyAsync.Value.Result.LogUpdated -= LogFolder_LogUpdated;
             Document = null;
             isStarted = false;
         }
