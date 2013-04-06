@@ -83,6 +83,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="C1\C1ContainterType.cs" />
+    <Compile Include="C1\C1DeploymentStatus.cs" />
+    <Compile Include="Extensions\AsyncLasy.cs" />
     <Compile Include="MVVM\EventCommands\EventBinding.cs" />
     <Compile Include="ViewModels\DeploymentLogViewerViewModel.cs" />
     <Compile Include="Views\DeploymentLogViewer.xaml.cs">

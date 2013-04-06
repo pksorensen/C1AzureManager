@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAzure.Storage;
+using S_Innovations.C1.AzureManager.C1;
 using S_Innovations.C1.AzureManager.ExtensionMethods;
 using S_Innovations.C1.AzureManager.MVVM;
 using S_Innovations.C1.AzureManager.MVVM.EventCommands;
