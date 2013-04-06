@@ -1,22 +1,17 @@
-﻿using ICSharpCode.AvalonEdit.Document;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using S_Innovations.C1.AzureManager.Models;
+﻿using Microsoft.WindowsAzure.Storage;
+using S_Innovations.C1.AzureManager.ExtensionMethods;
 using S_Innovations.C1.AzureManager.MVVM;
 using S_Innovations.C1.AzureManager.MVVM.EventCommands;
+using S_Innovations.C1.AzureManager.TemplateSelectors;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Linq;
-using System.Linq;
-using S_Innovations.C1.AzureManager.ExtensionMethods;
-using System.Collections.Generic;
-using S_Innovations.C1.AzureManager.MVVM.ElementWrappers;
-using System.Windows.Controls;
-using System.Collections.ObjectModel;
-using S_Innovations.C1.AzureManager.TemplateSelectors;
-using System.Collections;
 
 namespace S_Innovations.C1.AzureManager.ViewModels
 {  
@@ -208,7 +203,7 @@ namespace S_Innovations.C1.AzureManager.ViewModels
                 var blobclient = storageAccount.CreateCloudBlobClient();
                 return (blobclient.ListContainers()
                     .Select(c => new C1Container { Container = c, ContainerType = c.CompositeContainerType(), Name = c.Name })
-                    .Where(c => c.ContainerType != CompositeContainerType.None)
+                    .Where(c => c.ContainerType != C1ContainerType.None)
                     .GroupByDeployments()).ToList();
             });
             Status = "Found " + Deployments.Count + " Deployments";

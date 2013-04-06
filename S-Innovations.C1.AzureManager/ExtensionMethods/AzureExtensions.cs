@@ -1,4 +1,6 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
+using S_Innovations.C1.AzureManager.C1;
+using S_Innovations.C1.AzureManager.Extensions;
 using S_Innovations.C1.AzureManager.Models;
 using System;
 using System.Collections.Generic;
@@ -8,38 +10,21 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using ContainerType = S_Innovations.C1.AzureManager.ExtensionMethods.CompositeContainerType;
+using ContainerType = S_Innovations.C1.AzureManager.C1.C1ContainerType;
 
 namespace S_Innovations.C1.AzureManager.ExtensionMethods
 {
-    public enum CompositeContainerType
-    {
-        None = 0,
-        Website = 1,
-        Deployment = 2
-    }
-    public enum CompositeDeploymentStatus
-    {
-        Running = 0,
-        Stopped = 1,
-    }
+
+
     public struct AzureInstance
     {
-        public CompositeDeploymentStatus Status { get; set; }
+        public C1DeploymentStatus Status { get; set; }
     }
-    public class AsyncLazy<T> : Lazy<Task<T>>
-    {
-        public AsyncLazy(Func<T> valueFactory) :
-            base(() => Task.Factory.StartNew(valueFactory)) { }
 
-        public AsyncLazy(Func<Task<T>> taskFactory) :
-            base(() => Task.Factory.StartNew(() => taskFactory()).Unwrap()) { }
-
-        public TaskAwaiter<T> GetAwaiter() { return Value.GetAwaiter(); }
-    }
     public class C1Container
     {
-        public CompositeContainerType ContainerType { get; set; }
+        //TODO Move IDispo.. to this class and hide LogFolder.
+        public C1ContainerType ContainerType { get; set; }
         public CloudBlobContainer Container { get; set; }
         private AsyncLazy<LogFolder> _logfolder;
 
@@ -112,7 +97,7 @@ namespace S_Innovations.C1.AzureManager.ExtensionMethods
             }
         }
 
-        public static CompositeContainerType CompositeContainerType(this CloudBlobContainer container)
+        public static C1ContainerType CompositeContainerType(this CloudBlobContainer container)
         {
             bool[] folders = new bool[6];
             foreach (var blob in container.ListBlobs())

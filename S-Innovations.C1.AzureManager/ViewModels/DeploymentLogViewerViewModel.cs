@@ -241,7 +241,7 @@ namespace S_Innovations.C1.AzureManager.ViewModels
             fs.UpdateFoldings(foldingManager, LogViewer.Element.Document);
             
              
-        
+         
             isStarted = true;
             
             //while (!LogViewer.IsVisual())
