@@ -27,6 +27,7 @@
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="TabControl" BasedOn="{StaticResource StandardTabControl}"/>
             <SolidColorBrush x:Key="BackgroundSelected" Color="#007ACC"/>
+            
             <DataTemplate x:Key="DeploymentDataTemplate">
                 <Grid HorizontalAlignment="Stretch">
                     <TextBlock Background="{StaticResource TextBoxBackground}"
@@ -43,9 +44,14 @@
               DataType="{x:Type TemplateSelectors:TabItemViewModel}">
                 <Views:DeploymentLogViewer/>
             </DataTemplate>
+            <DataTemplate x:Key="C1DeploymentWizardTemplate"
+              DataType="{x:Type TemplateSelectors:TabItemViewModel}">
+                <Views:CreateDeploymentWizard/>
+            </DataTemplate>
             <TemplateSelectors:TabControlTemplateSelector x:Key="TabControlTemplateSelector"
                 C1DeploymentLogViewer="{StaticResource C1DeploymentLogViewerTemplate}"
-                C1DeploymentWebsites ="{StaticResource C1DeploymentWebsitesTemplate}" />
+                C1DeploymentWebsites ="{StaticResource C1DeploymentWebsitesTemplate}"
+                C1DeploymentWizard="{StaticResource C1DeploymentWizardTemplate}"/>
            
         </ResourceDictionary>
         
@@ -72,6 +78,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top" SnapsToDevicePixels="True" Margin="2,0,0,0">
             <MenuItem Header="Files" ToolTip="Not Implemented">
+                <MenuItem Header="Create New Deployment" Command="{Binding CreateNewDeploymentWizard}"></MenuItem>
                 <!--<MenuItem Header="Rocket slot 1">
                     <MenuItem Header="Fire slot"/>
                     <Separator/>

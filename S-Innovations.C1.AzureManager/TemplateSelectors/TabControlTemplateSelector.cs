@@ -10,7 +10,14 @@ using System.Windows.Controls;
 
 namespace S_Innovations.C1.AzureManager.TemplateSelectors
 {
-    public class TabItemViewModel : ViewModel
+    //public class TabItemViewModel<T>  : TabItemViewModel where T : TabControlType
+    //{
+    //    public TabItemViewModel() : base(default(T),"test")
+    //    {
+
+    //    }
+    //}
+    public abstract class TabItemViewModel : ViewModel
     {
         public TabControlType TabType { get; set; }
 
@@ -41,6 +48,8 @@ namespace S_Innovations.C1.AzureManager.TemplateSelectors
         {
 
         }
+        
+
 
     }
     public enum TabControlType
@@ -48,12 +57,13 @@ namespace S_Innovations.C1.AzureManager.TemplateSelectors
         NONE = 0,
         C1DeploymentLogViewer = 1,
         C1DeploymentWebsites = 2,
+        C1DeploymentWizard = 3,
     }
     public class TabControlTemplateSelector : DataTemplateSelector
     {
         public DataTemplate C1DeploymentLogViewer { get; set; }
         public DataTemplate C1DeploymentWebsites { get; set; }
-
+        public DataTemplate C1DeploymentWizard { get; set; }
 
         public override DataTemplate SelectTemplate(Object item,
         DependencyObject container)
@@ -61,13 +71,15 @@ namespace S_Innovations.C1.AzureManager.TemplateSelectors
             var vm = item as TabItemViewModel;
 
             if (vm == null) return base.SelectTemplate(item, container);
-
+            
             switch (vm.TabType)
             {
                 case TabControlType.C1DeploymentLogViewer:
                     return C1DeploymentLogViewer;
                 case TabControlType.C1DeploymentWebsites:
                     return C1DeploymentWebsites;
+                case TabControlType.C1DeploymentWizard:
+                    return C1DeploymentWizard;
                 default:
                     return base.SelectTemplate(item, container);
             }

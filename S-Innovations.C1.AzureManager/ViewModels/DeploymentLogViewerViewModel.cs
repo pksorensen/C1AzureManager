@@ -165,15 +165,16 @@ namespace S_Innovations.C1.AzureManager.ViewModels
         /// </summary>
         public override async void RaiseActiveEvent()
         {
-            if (!isStarted)
-                return;
-
             while (LogViewer.Dispatcher == null)
                 await Task.Delay(500);
+
+            if (!isStarted)
+                await start();
 
         //    LogViewer.Dispatcher.Invoke((UpdateDelegate)update, new object[] {null});
             
             foldingManager = FoldingManager.Install(LogViewer.Element.TextArea);
+            fs = new LogFoldingStratagy();
             fs.UpdateFoldings(foldingManager, LogViewer.Element.Document);
             
             update();
@@ -220,10 +221,10 @@ namespace S_Innovations.C1.AzureManager.ViewModels
         }
         FoldingManager foldingManager;
             LogFoldingStratagy fs;
-        public async Task Start()
+ 
+        private async Task start()
         {
-            while (LogViewer.Dispatcher == null)
-                await Task.Delay(500);
+            
             await LogViewer.Dispatcher.InvokeAsync(() =>
             {
                 Document = new TextDocument();
@@ -236,9 +237,9 @@ namespace S_Innovations.C1.AzureManager.ViewModels
             
 
             
-            foldingManager = FoldingManager.Install(LogViewer.Element.TextArea);
-            fs = new LogFoldingStratagy();
-            fs.UpdateFoldings(foldingManager, LogViewer.Element.Document);
+           // foldingManager = FoldingManager.Install(LogViewer.Element.TextArea);
+           // fs = new LogFoldingStratagy();
+            //fs.UpdateFoldings(foldingManager, LogViewer.Element.Document);
             
              
          

@@ -87,7 +87,11 @@
     <Compile Include="C1\C1DeploymentStatus.cs" />
     <Compile Include="Extensions\AsyncLasy.cs" />
     <Compile Include="MVVM\EventCommands\EventBinding.cs" />
+    <Compile Include="ViewModels\CreateDeploymentWizardViewModel.cs" />
     <Compile Include="ViewModels\DeploymentLogViewerViewModel.cs" />
+    <Compile Include="Views\CreateDeploymentWizard.xaml.cs">
+      <DependentUpon>CreateDeploymentWizard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeploymentLogViewer.xaml.cs">
       <DependentUpon>DeploymentLogViewer.xaml</DependentUpon>
     </Compile>
@@ -107,6 +111,10 @@
     <Compile Include="TemplateSelectors\TabControlTemplateSelector.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Page Include="Resources\TabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateDeploymentWizard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -32,6 +32,10 @@ namespace S_Innovations.C1.AzureManager.ViewModels
 
         #endregion
 
+        #region Commands
+        public ICommand CreateNewDeploymentWizard { get; set; }
+        #endregion
+
         #region Properties
 
         public XDocument WebSitesConfiguration 
@@ -58,8 +62,11 @@ namespace S_Innovations.C1.AzureManager.ViewModels
             {
                 if (_selected_tab != null)
                     _selected_tab.RaiseDeActiveEvent();
-                _selected_tab = value;
+
+                OnPropertyChange<TabItemViewModel>(ref _selected_tab, value);
+
                 _selected_tab.RaiseActiveEvent();
+
             }
         }
         public List<C1Container> Deployments
@@ -103,6 +110,8 @@ namespace S_Innovations.C1.AzureManager.ViewModels
             TabItemsViewModelCollection = new ObservableCollection<TabItemViewModel>();
             CloseTabCommand = new EventCommand<TabItemViewModel>(close_tabs);
             DeploymentSelectionChangedCommand = new EventCommand<object>(k => { OpenLogsCommand.RaiseCanExecuteChanged(); });
+            CreateNewDeploymentWizard = new RelayCommand(createNewDeploymentWizard);
+
            //  public RelayCommand CloseTabCommand { get; set; }
             
             //TODO Fix the watermarks.
@@ -226,10 +235,9 @@ namespace S_Innovations.C1.AzureManager.ViewModels
             foreach (C1Container c1 in a)
             {
                 TabItemsViewModelCollection.Add(added = new DeploymentLogViewerViewModel(c1));
-                OpenedTab = added;
-                RaisePropertyChanged("OpenedTab");
-                await added.Start();
             }
+            OpenedTab = added;
+          
             Status = "Logs have been opened";
 
             // tab.
@@ -279,5 +287,39 @@ namespace S_Innovations.C1.AzureManager.ViewModels
 
         
         #endregion
+
+        void createNewDeploymentWizard()
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".cscfg";
+            dlg.Filter = "Deployments Files (*.cscfg)|*.cscfg;*.cspkg";
+            dlg.Multiselect = true;
+            
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                if (dlg.FileNames.Length == 2 && dlg.FileNames.Any(s => s.EndsWith(".cspkg")) && dlg.FileNames.Any(s => s.EndsWith(".cscfg")))
+                {
+                   
+                    addTab( new CreateDeploymentWizardViewModel(
+                            dlg.FileNames.First(s => s.EndsWith(".cscfg")),
+                            dlg.FileNames.First(s => s.EndsWith(".cspkg"))));
+                    
+                }
+            
+              
+            }
+        }
+
+        async void addTab(TabItemViewModel added)
+        {
+            TabItemsViewModelCollection.Add(added);
+            OpenedTab = added;
+        }
     }
 }
