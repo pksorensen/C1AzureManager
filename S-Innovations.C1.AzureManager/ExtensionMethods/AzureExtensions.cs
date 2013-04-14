@@ -83,19 +83,27 @@ namespace S_Innovations.C1.AzureManager.ExtensionMethods
             var arr = containers.ToArray(); 
             foreach (var c in arr.Where(c => c.ContainerType == ContainerType.Deployment))
             {
-                c.WebsitesConfiguration =  new WebsitesConfiguration(c.Container.GetBlockBlobReference(CONFIGURATION_CONTAINER + "Websites.xml"));
-                c.Childs = new List<C1Container>();
-                c.Name = c.Container.Name;
-                var childblobs = c.WebsitesConfiguration.Document.Root.Elements("Website").Attributes("blobContainerName");                
-                foreach (var x in childblobs.Select(a => arr.FirstOrDefault(cname => cname.Name.Equals(a.Value))))
+                try
                 {
-                    if(x!=null)
-                        c.Childs.Add(x);
-                }
 
+                    c.WebsitesConfiguration = new WebsitesConfiguration(c.Container.GetBlockBlobReference(CONFIGURATION_CONTAINER + "Websites.xml"));
+                    c.Childs = new List<C1Container>();
+                    c.Name = c.Container.Name;
+                    var childblobs = c.WebsitesConfiguration.Document.Root.Elements("Website").Attributes("blobContainerName");
+                    foreach (var x in childblobs.Select(a => arr.FirstOrDefault(cname => cname.Name.Equals(a.Value))))
+                    {
+                        if (x != null)
+                            c.Childs.Add(x);
+                    }
+                }
+                catch (Exception e)
+                {
+                    continue; //This happens if the deployment is without websites.
+                }
                 yield return c;
             }
         }
+
 
         public static C1ContainerType CompositeContainerType(this CloudBlobContainer container)
         {
@@ -133,7 +141,7 @@ namespace S_Innovations.C1.AzureManager.ExtensionMethods
 
             }
                
-            if (folders.Skip(1).All(x => x))
+            if (folders.Skip(1).Take(3).All(x => x))
                 return ContainerType.Deployment;
             else if (folders.Take(3).All(x=>x))
                 return ContainerType.Website;
