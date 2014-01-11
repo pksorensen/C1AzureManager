@@ -1,6 +1,8 @@
 Composite C1 Azure Manager and Log Viewer.
 ==============
 
+### Its discondinuted. I was hired by Composite and we have together been building a new Webrole that uses the build in logging and trace listeners in Windows Azure. There will be a similar application for the new webrole for making deployment easier, as it was the goal of this version 1. More info to come.
+
 This is the work of one days coding. Goal was to create a Log Viewer for Composite C1 Azure part that only downloaded the changes written to the logs in the storage account.  
 
 The application have been build using MVVM patterns and should be easy to do further work on.
